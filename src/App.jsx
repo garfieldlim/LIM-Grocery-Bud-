@@ -5,7 +5,7 @@ import Alert from "./Alert";
 function App() {
   const [name, setName] = useState("");
   const [list, setList] = useState([]);
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [editID, setEditID] = useState(null);
   const [alert, setAlert] = useState({
     show: false,
@@ -25,14 +25,14 @@ function App() {
       const newItem = {id: new Date().getTime().toString(),
       title:name};
       setList([...list,newItemn]);
-      setName('')
+      setName('');
     }
     }
   
 
   return (
     <section className="section-center">
-      meowk
+      meossswk
       <form className="grocery-form" onSubmit={handleSubmit}>
         {alert.show && <Alert />}
         <h3>Grocery Bud</h3>
@@ -50,7 +50,7 @@ function App() {
         </div>
       </form>
       <div className="grocery-container">
-        <List />
+        <List  items={list}/>
         <button className="clear-btn">clear items</button>
       </div>
     </section>
