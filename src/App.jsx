@@ -2,9 +2,17 @@ import React, { useState, useEffect } from "react";
 import List from "./List";
 import Alert from "./Alert";
 
+const getLocalStorage = () => {
+  let list = localStorage.getItem("list");
+  if (list) {
+    return (list = JSON.parse(localStorage.getItem("list")));
+  } else {
+    return [];
+  }
+};
 function App() {
   const [name, setName] = useState("");
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(getLocalStorage());
   const [isEditing, setIsEditing] = useState(false);
   const [editID, setEditID] = useState(null);
   const [alert, setAlert] = useState({
@@ -25,7 +33,10 @@ function App() {
           return item;
         })
       );
+      setName("");
+      setEditID(null);
       setIsEditing(false);
+      showAlert(true, "success", "Edited na, idol!");
     } else {
       showAlert(true, "success", "Sheesh! Yessir!");
       const newItem = { id: new Date().getTime().toString(), title: name };
@@ -55,23 +66,31 @@ function App() {
     setEditID(id);
     setName(specificItem.title);
   };
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(list));
+  }, [list]);
+
 
   return (
     <section className="section-center">
-      meossswk
       <form className="grocery-form" onSubmit={handleSubmit}>
         {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
-        <h3>Grocery Bud</h3>
+        <div className="form-control"><img src="https://www.pngmart.com/files/22/Louis-Vuitton-Logo-PNG-1.png" className="logo"></img>
+        </div>
+        <h3>Tindahan ni Aling Luisa de Viton</h3>
+        <h2>Laysho Laysho Grocery</h2>
         <div className="form-control">
-          <input
-            type="text"
-            className="grocery"
-            placeholder="e.g. eggslyn"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <div>
+            <input
+              type="text"
+              className="grocery"
+              placeholder="e.g. Louis Vuitton Sardines"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
           <button type="submit" className="submit-btn">
-            {isEditing ? "edit" : "submit"}
+            {isEditing ? "Edit mo yarn?!" : "Forda go!"}
           </button>
         </div>
       </form>
